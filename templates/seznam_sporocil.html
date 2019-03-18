@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Sporocila{% endblock title %}
+{% block sporocila %}
+    <h1>Seznam sporocil</h1>
+    {% for sporocilo in seznam %}
+        <br>
+        <h3>{{ sporocilo.ime }} {{ sporocilo.priimek }} je
+        {{ sporocilo.nastanek.strftime("%d.%m.%Y") }} ob  {{ sporocilo.nastanek.strftime("%H:%M") }} zapisal:</h3>
+        <h4>{{ sporocilo.sporocilo }}</h4>
+        <p>{{ sporocilo.email }}</p>
+    {% endfor %}
+{% endblock sporocila %}

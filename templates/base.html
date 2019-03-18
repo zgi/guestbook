@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock title %}</title>
+</head>
+<body>
+
+<h1>Knjiga gostov hotela Filton</h1>
+
+<ul>
+    <li><a href="/vnos">Vnos sporocila</a></li>
+    <li><a href="/seznam-sporocil">Pregled sporocil</a></li>
+    <li><a href="/">Domov</a></li>
+</ul>
+
+{% block pozdrav %}{% endblock pozdrav %}
+{% block vnos %}{% endblock vnos %}
+{% block sporocila %}{% endblock sporocila %}
+</body>
+</html>

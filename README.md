@@ -10,3 +10,4 @@ Basic GAE project with Jinja templating engine
 4. Open your browser and go to: `http://localhost:8080/`
 # DN20
 # DN20
+# guestbook

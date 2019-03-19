@@ -7,3 +7,4 @@ class Vnos(ndb.Model):
     email = ndb.StringProperty()
     sporocilo = ndb.StringProperty()
     nastanek = ndb.DateTimeProperty(auto_now_add=True)
+    izbrisan = ndb.BooleanProperty(default=False)

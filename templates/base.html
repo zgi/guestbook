@@ -3,6 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}{% endblock title %}</title>
+    <script
+  src="http://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
 </head>
 <body>
 
@@ -11,11 +15,13 @@
 <ul>
     <li><a href="/vnos">Vnos sporocila</a></li>
     <li><a href="/seznam-sporocil">Pregled sporocil</a></li>
+    <li><a href="/izbrisana-sporocila">Izbrisana sporocila</a></li>
     <li><a href="/">Domov</a></li>
 </ul>
 
 {% block pozdrav %}{% endblock pozdrav %}
 {% block vnos %}{% endblock vnos %}
 {% block sporocila %}{% endblock sporocila %}
+{% block izbrisana_sporocila %}{% endblock izbrisana_sporocila %}
 </body>
 </html>

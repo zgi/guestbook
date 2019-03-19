@@ -49,16 +49,49 @@ class VnosHandler(BaseHandler):
 
         data = Vnos(ime=ime, priimek=priimek, email=email, sporocilo=sporocilo)
         data.put()
-        return self.redirect('/')
+        return self.redirect_to('domov')
 
 class SeznamSporocilHandler(BaseHandler):
     def get(self):
-        seznam = Vnos.query().fetch()
+        seznam = Vnos.query(Vnos.izbrisan == False).fetch()
         params = {'seznam': seznam}
         return self.render_template("seznam_sporocil.html", params=params)
 
+class UrediSporociloHandler(BaseHandler):
+    def post(self, sporocilo_id):
+        vnos = self.request.get('sporocilo')
+        sporocilo = Vnos.get_by_id(int(sporocilo_id))
+        sporocilo.sporocilo = vnos
+        sporocilo.put()
+        return self.redirect_to('seznam-sporocil')
+
+class IzbrisiSporociloHandler(BaseHandler):
+    def post(self, sporocilo_id):
+        sporocilo = Vnos.get_by_id(int(sporocilo_id))
+        # sporocilo.key.delete()
+        sporocilo.izbrisan = True
+        sporocilo.put()
+        return self.redirect_to("seznam-sporocil")
+
+class IzbrisanaSporocilaHandler(BaseHandler):
+    def get(self):
+        seznam = Vnos.query(Vnos.izbrisan == True).fetch()
+        params = {'seznam': seznam}
+        return self.render_template("izbrisana_sporocila.html", params=params)
+
+class ObnoviSporociloHandler(BaseHandler):
+    def post(self, sporocilo_id):
+        sporocilo = Vnos.get_by_id(int(sporocilo_id))
+        sporocilo.izbrisan = False
+        sporocilo.put()
+        return self.redirect_to("izbrisana-sporocila")
+
 app = webapp2.WSGIApplication([
-    webapp2.Route('/', MainHandler),
+    webapp2.Route('/', MainHandler, name='domov'),
     webapp2.Route('/vnos', VnosHandler),
-    webapp2.Route('/seznam-sporocil', SeznamSporocilHandler),
+    webapp2.Route('/seznam-sporocil', SeznamSporocilHandler, name='seznam-sporocil'),
+    webapp2.Route('/sporocilo/<sporocilo_id:\d+>/uredi', UrediSporociloHandler),
+    webapp2.Route('/sporocilo/<sporocilo_id:\d+>/izbrisi', IzbrisiSporociloHandler),
+    webapp2.Route('/izbrisana-sporocila', IzbrisanaSporocilaHandler, name='izbrisana-sporocila'),
+    webapp2.Route('/sporocilo/<sporocilo_id:\d+>/obnovi', ObnoviSporociloHandler),
 ], debug=True)

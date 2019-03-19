@@ -8,5 +8,36 @@
         {{ sporocilo.nastanek.strftime("%d.%m.%Y") }} ob  {{ sporocilo.nastanek.strftime("%H:%M") }} zapisal:</h3>
         <h4>{{ sporocilo.sporocilo }}</h4>
         <p>{{ sporocilo.email }}</p>
+        <button onclick="uredi({{ sporocilo.key.id() }}, '{{ sporocilo.sporocilo }}')">Uredi</button>
+        <button onclick="izbrisi({{ sporocilo.key.id() }})">Izbrisi</button>
+<script>
+    function uredi(sporocilo_id, sporocilo) {
+    var msg = prompt('Urejanje sporočila', sporocilo)
+    if (msg === null) {
+    return;
+    }
+    else {
+    const Url = '/sporocilo/' + sporocilo_id + '/uredi';
+    const data = {sporocilo: msg}
+    $.post(Url, data, function(data, status){
+    console.log('${data} and status is ${status}')});
+    }
+}
+</script>
     {% endfor %}
+
+<script>
+function izbrisi(sporocilo_id) {
+    var potrdi = confirm('Ali  resnično želiš !IZBRISATI! sporočilo?')
+    if (potrdi == true) {
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", '/sporocilo/' + sporocilo_id + '/izbrisi', true);
+    xhr.send();
+    }
+    else {
+    //do nothing
+    }
+}
+</script>
+
 {% endblock sporocila %}
